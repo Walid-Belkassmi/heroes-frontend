@@ -65,8 +65,29 @@ const Home = () => {
     setPower("");
   };
 
-  console.log(image);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
+    const heroUpdate = {
+      slug: slug,
+      name: name,
+      power: arrayPower,
+      color: color,
+      isAlive: isAlive,
+      age: age,
+      image: image,
+    };
+
+    const request = await fetch(`http://localhost:5000/heroes`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(heroUpdate),
+    });
+  };
+
+  console.log(slug);
   return (
     <>
       <ul>
@@ -79,7 +100,7 @@ const Home = () => {
         })}
       </ul>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="slug">Slug</label>
           <input type="text" name="slug" onChange={handleChangeSlug} />
